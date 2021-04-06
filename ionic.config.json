@@ -1,0 +1,7 @@
+{
+  "name": "goudie-ca-src",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
