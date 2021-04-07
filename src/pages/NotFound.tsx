@@ -12,7 +12,6 @@ const title = '404';
 const NotFound: React.FC = () => {
 	const location = useLocation();
 	const unknownPath = location.pathname;
-	const name = '404 - Local';
 
 	return (
 		<IonPage>
