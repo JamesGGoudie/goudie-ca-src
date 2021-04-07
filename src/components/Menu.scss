@@ -24,21 +24,21 @@ ion-menu {
 		}
 
 		ion-list {
-			&#inbox-list {
-				border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
-
-				ion-list-header {
-					font-size: 22px;
-					font-weight: 600;
-					min-height: 20px;
-				}
+			&:first-of-type ion-list-header {
+				font-size: 22px;
+				font-weight: 600;
+				min-height: 20px;
 			}
 
-			&#labels-list ion-list-header {
+			&:not(:first-of-type) ion-list-header {
 				font-size: 16px;
 				margin-bottom: 18px;
 				color: #757575;
 				min-height: 26px;
+			}
+
+			&:not(:last-of-type) {
+				border-bottom: 1px solid var(--ion-color-step-150, #d7d8da);
 			}
 		}
 

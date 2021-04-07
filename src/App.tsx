@@ -5,6 +5,8 @@ import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
 import Page from './pages/Page';
 
+import { ROUTES } from './constants';
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -32,9 +34,9 @@ const App: React.FC = () => {
 					<Menu />
 					<IonRouterOutlet id="main">
 						<Route path="/" exact={true}>
-							<Redirect to="/page/Inbox" />
+							<Redirect to={ROUTES.HOME} />
 						</Route>
-						<Route path="/page/:name" exact={true}>
+						<Route path="/:name" exact={true}>
 							<Page />
 						</Route>
 					</IonRouterOutlet>

@@ -13,7 +13,22 @@ import {
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+
+import {
+	briefcaseOutline,
+	briefcaseSharp,
+	cogOutline,
+	cogSharp,
+	homeOutline,
+	homeSharp,
+	informationCircleOutline,
+	informationCircleSharp,
+	schoolOutline,
+	schoolSharp
+} from 'ionicons/icons';
+
+import { ROUTES } from 'src/constants';
+
 import './Menu.scss';
 
 interface AppPage {
@@ -23,46 +38,50 @@ interface AppPage {
   title: string;
 }
 
-const appPages: AppPage[] = [
+interface AppPageGroup {
+	header?: string;
+	notes: string[];
+	pages: AppPage[];
+}
+
+const appPageGroups: AppPageGroup[] = [
 	{
-		title: 'Inbox',
-		url: '/page/Inbox',
-		iosIcon: mailOutline,
-		mdIcon: mailSharp
-	},
-	{
-		title: 'Outbox',
-		url: '/page/Outbox',
-		iosIcon: paperPlaneOutline,
-		mdIcon: paperPlaneSharp
-	},
-	{
-		title: 'Favorites',
-		url: '/page/Favorites',
-		iosIcon: heartOutline,
-		mdIcon: heartSharp
-	},
-	{
-		title: 'Archived',
-		url: '/page/Archived',
-		iosIcon: archiveOutline,
-		mdIcon: archiveSharp
-	},
-	{
-		title: 'Trash',
-		url: '/page/Trash',
-		iosIcon: trashOutline,
-		mdIcon: trashSharp
-	},
-	{
-		title: 'Spam',
-		url: '/page/Spam',
-		iosIcon: warningOutline,
-		mdIcon: warningSharp
+		header: 'James Gabriel Goudie',
+		notes: ['Software Developer / Engineer'],
+		pages: [
+			{
+				title: 'Home',
+				url: ROUTES.HOME,
+				iosIcon: homeOutline,
+				mdIcon: homeSharp
+			},
+			{
+				title: 'About',
+				url: ROUTES.ABOUT,
+				iosIcon: informationCircleOutline,
+				mdIcon: informationCircleSharp
+			},
+			{
+				title: 'Education',
+				url: ROUTES.EDUCATION,
+				iosIcon: schoolOutline,
+				mdIcon: schoolSharp
+			},
+			{
+				title: 'Experience',
+				url: ROUTES.EXPERIENCE,
+				iosIcon: briefcaseOutline,
+				mdIcon: briefcaseSharp
+			},
+			{
+				title: 'Skills',
+				url: ROUTES.SKILLS,
+				iosIcon: cogOutline,
+				mdIcon: cogSharp
+			}
+		]
 	}
 ];
-
-const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
 const Menu: React.FC = () => {
 	const location = useLocation();
@@ -70,30 +89,32 @@ const Menu: React.FC = () => {
 	return (
 		<IonMenu contentId="main" type="overlay">
 			<IonContent>
-				<IonList id="inbox-list">
-					<IonListHeader>Inbox</IonListHeader>
-					<IonNote>hi@ionicframework.com</IonNote>
-					{appPages.map((appPage, index) => {
-						return (
-							<IonMenuToggle key={index} autoHide={false}>
-								<IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-									<IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
-									<IonLabel>{appPage.title}</IonLabel>
-								</IonItem>
-							</IonMenuToggle>
-						);
-					})}
-				</IonList>
-
-				<IonList id="labels-list">
-					<IonListHeader>Labels</IonListHeader>
-					{labels.map((label, index) => (
-						<IonItem lines="none" key={index}>
-							<IonIcon slot="start" icon={bookmarkOutline} />
-							<IonLabel>{label}</IonLabel>
-						</IonItem>
-					))}
-				</IonList>
+				{appPageGroups.map((appPageGroup, i) => {
+					return (<IonList key={i}>
+						{appPageGroup.header ? <IonListHeader>{appPageGroup.header}</IonListHeader> : null}
+						{appPageGroup.notes.map((note, index) => {
+							return (
+								<IonNote key={index}>{note}</IonNote>
+							);
+						})}
+						{appPageGroup.pages.map((appPage, index) => {
+							return (
+								<IonMenuToggle key={index} autoHide={false}>
+									<IonItem
+										className={location.pathname === appPage.url ? 'selected' : ''}
+										routerLink={appPage.url}
+										routerDirection="none"
+										lines="none"
+										detail={false}
+									>
+										<IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
+										<IonLabel>{appPage.title}</IonLabel>
+									</IonItem>
+								</IonMenuToggle>
+							);
+						})}
+					</IonList>);
+				})}
 			</IonContent>
 		</IonMenu>
 	);
