@@ -3,5 +3,6 @@ export const ROUTES = {
 	ABOUT: '/about',
 	EDUCATION: '/education',
 	EXPERIENCE: '/experience',
-	SKILLS: '/skills'
+	SKILLS: '/skills',
+	NOT_FOUND: '/not-found'
 };
