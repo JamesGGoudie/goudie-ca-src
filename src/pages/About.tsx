@@ -1,8 +1,13 @@
 import React from 'react';
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonContent, IonPage } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 
+import TopBar from 'src/components/TopBar';
+import TopBarFullscreen from 'src/components/TopBarFullscreen';
+
 import './About.scss';
+
+const title = 'About';
 
 const About: React.FC = () => {
 
@@ -10,21 +15,10 @@ const About: React.FC = () => {
 
 	return (
 		<IonPage>
-			<IonHeader>
-				<IonToolbar>
-					<IonButtons slot="start">
-						<IonMenuButton />
-					</IonButtons>
-					<IonTitle>{name}</IonTitle>
-				</IonToolbar>
-			</IonHeader>
+			<TopBar title={title}/>
 
 			<IonContent fullscreen>
-				<IonHeader collapse="condense">
-					<IonToolbar>
-						<IonTitle size="large">{name}</IonTitle>
-					</IonToolbar>
-				</IonHeader>
+				<TopBarFullscreen title={title}/>
 				<ExploreContainer name={name} />
 			</IonContent>
 		</IonPage>
