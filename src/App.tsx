@@ -56,10 +56,9 @@ const App: React.FC = () => {
 						<Route path={ROUTES.SKILLS} exact={true}>
 							<Skills />
 						</Route>
-						<Route path={ROUTES.NOT_FOUND} exact={true}>
+						<Route>
 							<NotFound />
 						</Route>
-						<Redirect to={ROUTES.NOT_FOUND} />
 					</IonRouterOutlet>
 				</IonSplitPane>
 			</IonReactRouter>
