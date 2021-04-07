@@ -51,31 +51,31 @@ const appPageGroups: AppPageGroup[] = [
 		pages: [
 			{
 				title: 'Home',
-				url: ROUTES.HOME.path,
+				url: ROUTES.HOME,
 				iosIcon: homeOutline,
 				mdIcon: homeSharp
 			},
 			{
 				title: 'About',
-				url: ROUTES.ABOUT.path,
+				url: ROUTES.ABOUT,
 				iosIcon: informationCircleOutline,
 				mdIcon: informationCircleSharp
 			},
 			{
 				title: 'Education',
-				url: ROUTES.EDUCATION.path,
+				url: ROUTES.EDUCATION,
 				iosIcon: schoolOutline,
 				mdIcon: schoolSharp
 			},
 			{
 				title: 'Experience',
-				url: ROUTES.EXPERIENCE.path,
+				url: ROUTES.EXPERIENCE,
 				iosIcon: briefcaseOutline,
 				mdIcon: briefcaseSharp
 			},
 			{
 				title: 'Skills',
-				url: ROUTES.SKILLS.path,
+				url: ROUTES.SKILLS,
 				iosIcon: cogOutline,
 				mdIcon: cogSharp
 			}

@@ -38,21 +38,21 @@ const App: React.FC = () => {
 					<Menu />
 					<IonRouterOutlet id="main">
 						<Route path="/" exact={true}>
-							<Redirect to={ROUTES.HOME.path} />
+							<Redirect to={ROUTES.HOME} />
 						</Route>
-						<Route path={ROUTES.HOME.path} exact={true}>
+						<Route path={ROUTES.HOME} exact={true}>
 							<Home />
 						</Route>
-						<Route path={ROUTES.ABOUT.path} exact={true}>
+						<Route path={ROUTES.ABOUT} exact={true}>
 							<About />
 						</Route>
-						<Route path={ROUTES.EDUCATION.path} exact={true}>
+						<Route path={ROUTES.EDUCATION} exact={true}>
 							<Education />
 						</Route>
-						<Route path={ROUTES.EXPERIENCE.path} exact={true}>
+						<Route path={ROUTES.EXPERIENCE} exact={true}>
 							<Experience />
 						</Route>
-						<Route path={ROUTES.SKILLS.path} exact={true}>
+						<Route path={ROUTES.SKILLS} exact={true}>
 							<Skills />
 						</Route>
 					</IonRouterOutlet>
