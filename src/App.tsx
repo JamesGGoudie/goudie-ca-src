@@ -3,7 +3,11 @@ import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
-import Page from './pages/Page';
+import Home from './pages/Home';
+import About from './pages/About';
+import Education from './pages/Education';
+import Experience from './pages/Experience';
+import Skills from './pages/Skills';
 
 import { ROUTES } from './constants';
 
@@ -34,10 +38,22 @@ const App: React.FC = () => {
 					<Menu />
 					<IonRouterOutlet id="main">
 						<Route path="/" exact={true}>
-							<Redirect to={ROUTES.HOME} />
+							<Redirect to={ROUTES.HOME.path} />
 						</Route>
-						<Route path="/:name" exact={true}>
-							<Page />
+						<Route path={ROUTES.HOME.path} exact={true}>
+							<Home />
+						</Route>
+						<Route path={ROUTES.ABOUT.path} exact={true}>
+							<About />
+						</Route>
+						<Route path={ROUTES.EDUCATION.path} exact={true}>
+							<Education />
+						</Route>
+						<Route path={ROUTES.EXPERIENCE.path} exact={true}>
+							<Experience />
+						</Route>
+						<Route path={ROUTES.SKILLS.path} exact={true}>
+							<Skills />
 						</Route>
 					</IonRouterOutlet>
 				</IonSplitPane>

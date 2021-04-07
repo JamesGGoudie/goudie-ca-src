@@ -1,20 +1,12 @@
 import React from 'react';
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { useParams } from 'react-router';
-import { Redirect } from 'react-router-dom';
 import ExploreContainer from '../components/ExploreContainer';
-import './Page.scss';
-import { ROUTES } from 'src/constants';
 
-const Page: React.FC = () => {
+import './Education.scss';
 
-	const { name } = useParams<{ name: string; }>();
+const Education: React.FC = () => {
 
-	if (!Object.values(ROUTES).find((r) => r.substring(1) === name)) {
-		return (
-			<Redirect to={ROUTES.HOME} />
-		);
-	}
+	const name = 'Education - Local';
 
 	return (
 		<IonPage>
@@ -39,4 +31,4 @@ const Page: React.FC = () => {
 	);
 };
 
-export default Page;
+export default Education;
