@@ -1,5 +1,19 @@
 import React from 'react';
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonImg, IonItem, IonLabel, IonList, IonListHeader, IonPage } from '@ionic/react';
+
+import {
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardSubtitle,
+	IonCardTitle,
+	IonContent,
+	IonImg,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonListHeader,
+	IonPage
+} from '@ionic/react';
 
 import TopBar from 'src/components/TopBar';
 import TopBarFullscreen from 'src/components/TopBarFullscreen';
