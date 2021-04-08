@@ -17,7 +17,7 @@ const About: React.FC = () => {
 		<IonPage>
 			<TopBar title={title} />
 
-			<IonContent fullscreen>
+			<IonContent >
 				<TopBarFullscreen title={title} />
 				<ExploreContainer name={name} />
 			</IonContent>
