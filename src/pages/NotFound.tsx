@@ -15,10 +15,10 @@ const NotFound: React.FC = () => {
 
 	return (
 		<IonPage>
-			<TopBar title={title}/>
+			<TopBar title={title} />
 
 			<IonContent fullscreen>
-				<TopBarFullscreen title={title}/>
+				<TopBarFullscreen title={title} />
 				<div className="container">
 					<h3>404 - Unknown Path</h3>
 					<p>{unknownPath}</p>

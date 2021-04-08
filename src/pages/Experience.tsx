@@ -15,10 +15,10 @@ const Experience: React.FC = () => {
 
 	return (
 		<IonPage>
-			<TopBar title={title}/>
+			<TopBar title={title} />
 
 			<IonContent fullscreen>
-				<TopBarFullscreen title={title}/>
+				<TopBarFullscreen title={title} />
 				<ExploreContainer name={name} />
 			</IonContent>
 		</IonPage>
