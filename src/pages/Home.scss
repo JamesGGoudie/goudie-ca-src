@@ -1,0 +1,55 @@
+ion-content {
+	.page {
+		display: flex;
+
+		flex-direction: column;
+
+		padding: 16px;
+
+		.intro {
+			ion-img {
+				float: left;
+
+				margin-right: 16px;
+				margin-bottom: 16px;
+
+				max-width: 300px;
+				max-height: 300px;
+			}
+
+			p {
+				margin-top: 0;
+			}
+		}
+	}
+
+	.online-presence {
+		display: flex;
+
+		flex-wrap: wrap;
+
+		margin-bottom: 16px;
+
+		ion-card {
+			width: 300px;
+		}
+	}
+
+	.free-time-activities {
+		ion-list {
+			ion-list-header {
+				font-size: 18px;
+				font-weight: 400;
+				min-height: 16px;
+			}
+
+			ion-item {
+				ion-label {
+					span {
+						color: var(--ion-color-secondary);
+					}
+				}
+			}
+		}
+	}
+}
