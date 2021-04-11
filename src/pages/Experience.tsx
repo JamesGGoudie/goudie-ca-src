@@ -1,17 +1,16 @@
 import React from 'react';
 import { IonContent, IonPage } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 
 import TopBar from 'src/components/TopBar';
 import TopBarFullscreen from 'src/components/TopBarFullscreen';
+import WorkEntry from 'src/components/WorkEntry';
 
 import './Experience.scss';
+import { XP_INFO } from 'src/constants';
 
 const title = 'Experience';
 
 const Experience: React.FC = () => {
-
-	const name = 'Experience - Local';
 
 	return (
 		<IonPage>
@@ -19,7 +18,16 @@ const Experience: React.FC = () => {
 
 			<IonContent >
 				<TopBarFullscreen title={title} />
-				<ExploreContainer name={name} />
+				<div className="page">
+					{XP_INFO.map((workEntry, i) => <WorkEntry key={i}
+						company={workEntry.company}
+						position={workEntry.position}
+						start={workEntry.start}
+						end={workEntry.end}
+						highlights={workEntry.highlights}
+						summary={workEntry.summary}
+					/>)}
+				</div>
 			</IonContent>
 		</IonPage>
 	);

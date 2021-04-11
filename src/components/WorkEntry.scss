@@ -1,0 +1,23 @@
+.work-entry {
+	.company-name {
+		color: var(--ion-color-secondary);
+		font-size: 20px;
+		line-height: 26px;
+	}
+
+	.position {
+		color: var(--ion-color-tertiary);
+	}
+
+	.duration {
+		color: var(--ion-color-tertiary);
+	}
+
+	.highlights {
+		.highlight {
+			&:not(:last-of-type) {
+				margin-bottom: 4px;
+			}
+		}
+	}
+}
