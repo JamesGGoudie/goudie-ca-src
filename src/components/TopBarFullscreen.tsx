@@ -1,11 +1,9 @@
 import React from 'react';
 import { IonHeader, IonTitle, IonToolbar } from '@ionic/react';
 
-import './TopBarFullscreen.scss';
+import { TopBarFullscreenProps } from 'src/properties';
 
-interface TopBarFullscreenProps {
-  title: string;
-}
+import './TopBarFullscreen.scss';
 
 const TopBarFullscreen: React.FC<TopBarFullscreenProps> = ({ title }: TopBarFullscreenProps) => {
 	return (

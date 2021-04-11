@@ -1,11 +1,9 @@
 import React from 'react';
 import { IonButtons, IonHeader, IonMenuButton, IonTitle, IonToolbar } from '@ionic/react';
 
-import './TopBar.scss';
+import { TopBarProps } from 'src/properties';
 
-interface TopBarProps {
-  title: string;
-}
+import './TopBar.scss';
 
 const TopBar: React.FC<TopBarProps> = ({ title }: TopBarProps) => {
 	return (
