@@ -1,8 +1,10 @@
 export interface WorkEntryProps {
-	company?: string;
-  position: string;
-	start: string;
-	end: string;
-	highlights: string[];
-	summary?: string[];
+	company: string;
+	terms: {
+		position: string;
+		start: string;
+		end: string;
+		highlights: string[];
+		summary?: string[];
+	}[]
 }

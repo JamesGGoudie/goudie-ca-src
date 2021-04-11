@@ -21,11 +21,7 @@ const Experience: React.FC = () => {
 				<div className="page">
 					{XP_INFO.map((workEntry, i) => <WorkEntry key={i}
 						company={workEntry.company}
-						position={workEntry.position}
-						start={workEntry.start}
-						end={workEntry.end}
-						highlights={workEntry.highlights}
-						summary={workEntry.summary}
+						terms={workEntry.terms}
 					/>)}
 				</div>
 			</IonContent>

@@ -7,34 +7,35 @@ import './WorkEntry.scss';
 const WorkEntry: React.FC<WorkEntryProps> = (
 	{
 		company,
-		position,
-		start,
-		end,
-		highlights,
-		summary
+		terms
 	}: WorkEntryProps
 ) => {
 	return (
 		<div className="work-entry">
 			{company ? <h3 className="company-name">{company}</h3> : null}
-			<div>
-				<div className="position">{position}</div>
-				<div className="duration">{start} - {end}</div>
-			</div>
-			<ul className="highlights">
-				{highlights.map((highlight, i) => <li className="highlight" key={i}>
-					{highlight}
-				</li>)}
-			</ul>
-			{summary ? (
-				<div className="summary">
-					{summary.map((summaryItem, i) => <p className="summary-item" key={i}>
-						{summaryItem}
-					</p>)}
+			{terms.map((term, i) => <div key={i}>
+				<div>
+					<div className="position">{term.position}</div>
+					<div className="duration">{term.start} - {term.end}</div>
 				</div>
-			) :
-				null
-			}
+				<ul className="highlights">
+					{term.highlights.map((highlight, i) =>
+						<li className="highlight" key={i}>
+							{highlight}
+						</li>)}
+				</ul>
+				{term.summary ? (
+					<div className="summary">
+						{term.summary.map((summaryItem, i) =>
+							<p className="summary-item" key={i}>
+								{summaryItem}
+							</p>)}
+					</div>
+				) :
+					null
+				}
+			</div>
+			)}
 		</div>
 	);
 };
