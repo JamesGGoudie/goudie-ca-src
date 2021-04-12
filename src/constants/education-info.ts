@@ -10,8 +10,8 @@ export const EDUCATION_INFO: EducationInfo = {
 		'Computer Science Co-op Program',
 		'Specialized in Software Engineering',
 		'Named to Dean\'s List years of 2019 and 2020',
-		'Cumulative cGPA 3.44/4.0',
-		'Final Year GPA 3.74/4.0',
+		'Cumulative cGPA: 3.44 / 4.0',
+		'Final Year GPA: 3.74 / 4.0',
 	],
 	coursesHeader: 'Notable Courses',
 	coures: [
