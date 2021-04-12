@@ -1,4 +1,4 @@
-export interface OnlinePresenceProps {
+export interface OnlinePresenceEntryProps {
 	title: string;
 	subtitle: string;
 	mainContent: string;

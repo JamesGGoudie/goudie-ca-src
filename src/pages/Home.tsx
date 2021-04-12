@@ -10,7 +10,7 @@ import {
 	IonPage
 } from '@ionic/react';
 
-import OnlinePresence from 'src/components/OnlinePresence';
+import OnlinePresenceEntry from 'src/components/OnlinePresenceEntry';
 import TopBar from 'src/components/TopBar';
 import TopBarFullscreen from 'src/components/TopBarFullscreen';
 
@@ -43,7 +43,7 @@ const Home: React.FC = () => {
 						</div>
 					</div>
 					<div className="online-presence">
-						{ONLINE_PRESENCE_INFO.map((opi, i) => <OnlinePresence
+						{ONLINE_PRESENCE_INFO.map((opi, i) => <OnlinePresenceEntry
 							key={i}
 							title={opi.title}
 							subtitle={opi.subtitle}

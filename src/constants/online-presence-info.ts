@@ -1,6 +1,6 @@
-import { OnlinePresenceProps } from 'src/properties';
+import { OnlinePresenceEntryProps } from 'src/properties';
 
-export const ONLINE_PRESENCE_INFO: OnlinePresenceProps[] = [
+export const ONLINE_PRESENCE_INFO: OnlinePresenceEntryProps[] = [
 	{
 		title: 'GitHub',
 		subtitle: 'View my Work',

@@ -1,21 +1,28 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 import React from 'react';
 
-import { OnlinePresenceProps } from 'src/properties';
+import {
+	IonCard,
+	IonCardContent,
+	IonCardHeader,
+	IonCardSubtitle,
+	IonCardTitle
+} from '@ionic/react';
 
-import './OnlinePresence.scss';
+import { OnlinePresenceEntryProps } from 'src/properties';
 
-const OnlinePresence: React.FC<OnlinePresenceProps> = (
+import './OnlinePresenceEntry.scss';
+
+const OnlinePresenceEntry: React.FC<OnlinePresenceEntryProps> = (
 	{
 		title,
 		subtitle,
 		mainContent,
 		anchorHref,
 		anchorText
-	}: OnlinePresenceProps
+	}: OnlinePresenceEntryProps
 ) => {
 	return (
-		<IonCard className="online-presence">
+		<IonCard className="online-presence-entry">
 			<IonCardHeader>
 				<IonCardSubtitle>{title}</IonCardSubtitle>
 				<IonCardTitle>{subtitle}</IonCardTitle>
@@ -28,4 +35,4 @@ const OnlinePresence: React.FC<OnlinePresenceProps> = (
 	);
 };
 
-export default OnlinePresence;
+export default OnlinePresenceEntry;
