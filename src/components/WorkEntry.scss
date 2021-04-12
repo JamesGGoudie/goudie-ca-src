@@ -12,12 +12,4 @@
 	.duration {
 		color: var(--ion-color-tertiary);
 	}
-
-	.highlights {
-		.highlight {
-			&:not(:last-of-type) {
-				margin-bottom: 4px;
-			}
-		}
-	}
 }
