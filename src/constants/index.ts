@@ -1,3 +1,4 @@
+export * from './education-info';
 export * from './free-time-info';
 export * from './home-intro';
 export * from './img-alts';
