@@ -22,7 +22,7 @@ const Education: React.FC = () => {
 				<TopBarFullscreen title={title} />
 				<div className="page">
 					<div className="summary">
-						<div className="school-name">{EDUCATION_INFO.schoolName}</div>
+						<h3 className="school-name">{EDUCATION_INFO.schoolName}</h3>
 						<div className="degree">
 							{EDUCATION_INFO.degree} with {EDUCATION_INFO.distinction}
 						</div>
