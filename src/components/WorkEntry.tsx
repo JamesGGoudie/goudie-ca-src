@@ -2,6 +2,8 @@ import React from 'react';
 
 import { WorkEntryProps } from 'src/properties';
 
+import UnorderedList from './UnorderedList';
+
 import './WorkEntry.scss';
 
 const WorkEntry: React.FC<WorkEntryProps> = (
@@ -18,12 +20,7 @@ const WorkEntry: React.FC<WorkEntryProps> = (
 					<div className="position">{term.position}</div>
 					<div className="duration">{term.start} - {term.end}</div>
 				</div>
-				<ul className="highlights">
-					{term.highlights.map((highlight, i) =>
-						<li className="highlight" key={i}>
-							{highlight}
-						</li>)}
-				</ul>
+				<UnorderedList items={term.highlights}/>
 				{term.summary ? (
 					<div className="summary">
 						{term.summary.map((summaryItem, i) =>
