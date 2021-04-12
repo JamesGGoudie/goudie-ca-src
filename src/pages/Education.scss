@@ -17,12 +17,15 @@
 		}
 	}
 
-	.courses {
+	.courses-section {
 		.courses-header {
 			color: var(--ion-color-secondary);
 		}
 
-		.course {
+		.courses {
+			display: flex;
+			flex-wrap: wrap;
+
 			margin-left: 4px;
 		}
 	}

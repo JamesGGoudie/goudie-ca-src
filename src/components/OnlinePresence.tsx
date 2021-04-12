@@ -15,7 +15,7 @@ const OnlinePresence: React.FC<OnlinePresenceProps> = (
 	}: OnlinePresenceProps
 ) => {
 	return (
-		<IonCard>
+		<IonCard className="online-presence">
 			<IonCardHeader>
 				<IonCardSubtitle>{title}</IonCardSubtitle>
 				<IonCardTitle>{subtitle}</IonCardTitle>

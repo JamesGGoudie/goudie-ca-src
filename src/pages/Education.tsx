@@ -1,14 +1,14 @@
 import React from 'react';
 import { IonContent, IonPage } from '@ionic/react';
 
+import CourseEntry from 'src/components/CourseEntry';
 import TopBar from 'src/components/TopBar';
 import TopBarFullscreen from 'src/components/TopBarFullscreen';
+import UnorderedList from 'src/components/UnorderedList';
 
 import { EDUCATION_INFO } from 'src/constants';
 
 import './Education.scss';
-import UnorderedList from 'src/components/UnorderedList';
-import CourseEntry from 'src/components/CourseEntry';
 
 const title = 'Education';
 
@@ -31,15 +31,17 @@ const Education: React.FC = () => {
 						</div>
 						<UnorderedList items={EDUCATION_INFO.highlights}/>
 					</div>
-					<div className="courses">
+					<div className="courses-section">
 						<h4 className="courses-header">{EDUCATION_INFO.coursesHeader}</h4>
-						{EDUCATION_INFO.coures.map((course, i) => <CourseEntry
-							key={i}
-							title={course.title}
-							grade={course.grade}
-							average={course.average}
-							highlights={course.highlights}
-							summary={course.summary}/>)}
+						<div className="courses">
+							{EDUCATION_INFO.coures.map((course, i) => <CourseEntry
+								key={i}
+								title={course.title}
+								grade={course.grade}
+								average={course.average}
+								highlights={course.highlights}
+								summary={course.summary}/>)}
+						</div>
 					</div>
 				</div>
 			</IonContent>
