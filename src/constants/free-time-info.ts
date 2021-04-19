@@ -1,7 +1,7 @@
 import { FreeTimeInfo } from 'src/interfaces';
 
 export const FREE_TIME_INFO: FreeTimeInfo = {
-	header: 'In my free time, I am most likely...',
+	header: 'Currently, in my free time, I am most likely...',
 	categories: [
 		{
 			title: 'Playing',
