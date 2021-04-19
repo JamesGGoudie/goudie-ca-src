@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import TopBar from 'src/components/TopBar';
 import TopBarFullscreen from 'src/components/TopBarFullscreen';
 
-import './Skills.scss';
+import './NotFound.scss';
 
 const title = '404';
 
@@ -19,7 +19,7 @@ const NotFound: React.FC = () => {
 
 			<IonContent >
 				<TopBarFullscreen title={title} />
-				<div className="container">
+				<div className="not-found-page">
 					<h3>404 - Unknown Path</h3>
 					<p>{unknownPath}</p>
 				</div>
