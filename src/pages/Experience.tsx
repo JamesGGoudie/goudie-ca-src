@@ -18,7 +18,7 @@ const Experience: React.FC = () => {
 
 			<IonContent >
 				<TopBarFullscreen title={title} />
-				<div className="page">
+				<div className="experience-page">
 					{XP_INFO.map((workEntry, i) => <WorkEntry key={i}
 						company={workEntry.company}
 						terms={workEntry.terms}

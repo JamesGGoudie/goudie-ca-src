@@ -33,7 +33,7 @@ const Home: React.FC = () => {
 
 			<IonContent >
 				<TopBarFullscreen title={title} />
-				<div className="page">
+				<div className="home-page">
 					<div className="intro">
 						<IonImg
 							alt={IMG_ALTS.WORK_ID}

@@ -20,7 +20,7 @@ const Education: React.FC = () => {
 
 			<IonContent >
 				<TopBarFullscreen title={title} />
-				<div className="page">
+				<div className="education-page">
 					<div className="summary">
 						<h3 className="school-name">{EDUCATION_INFO.schoolName}</h3>
 						<div className="degree">

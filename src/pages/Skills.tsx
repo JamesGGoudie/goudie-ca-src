@@ -19,7 +19,7 @@ const Skills: React.FC = () => {
 
 			<IonContent >
 				<TopBarFullscreen title={title} />
-				<div className="page">
+				<div className="skills-page">
 					<div className="skills">
 						{SKILLS_INFO.map((skillsGroup, i) => <SkillsGroup key={i}
 							name={skillsGroup.name}
