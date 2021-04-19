@@ -1,9 +1,11 @@
 import React from 'react';
 import { IonContent, IonPage } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 
+import SkillsGroup from 'src/components/SkillsGroup';
 import TopBar from 'src/components/TopBar';
 import TopBarFullscreen from 'src/components/TopBarFullscreen';
+
+import { SKILLS_INFO } from 'src/constants/skills-info';
 
 import './Skills.scss';
 
@@ -11,15 +13,18 @@ const title = 'Skills';
 
 const Skills: React.FC = () => {
 
-	const name = 'Skills - Local';
-
 	return (
 		<IonPage>
 			<TopBar title={title} />
 
 			<IonContent >
 				<TopBarFullscreen title={title} />
-				<ExploreContainer name={name} />
+				<div className="page">
+					{SKILLS_INFO.map((skillsGroup, i) => <SkillsGroup key={i}
+						name={skillsGroup.name}
+						skills={skillsGroup.skills}
+					/>)}
+				</div>
 			</IonContent>
 		</IonPage>
 	);
