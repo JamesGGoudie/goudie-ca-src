@@ -18,7 +18,7 @@ export const ONLINE_PRESENCE_INFO: AnchorCardProps[] = [
 	},
 	{
 		title: 'Email',
-		subtitle: 'Message Me',
+		subtitle: 'Contact Me',
 		mainContent: 'If you would like to directly make contact, you may email me at this address:',
 		anchorHref: 'mailto:james.g.goudie@gmail.com',
 		anchorText: 'james.g.goudie@gmail.com'
