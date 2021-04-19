@@ -1,5 +1,5 @@
 export * from './course-entry-props';
-export * from './online-presence-entry-props';
+export * from './anchor-card-props';
 export * from './skills-group-props';
 export * from './top-bar-fullscreen-props';
 export * from './top-bar-props';

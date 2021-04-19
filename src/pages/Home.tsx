@@ -10,7 +10,7 @@ import {
 	IonPage
 } from '@ionic/react';
 
-import OnlinePresenceEntry from 'src/components/OnlinePresenceEntry';
+import AnchorCard from 'src/components/AnchorCard';
 import TopBar from 'src/components/TopBar';
 import TopBarFullscreen from 'src/components/TopBarFullscreen';
 
@@ -43,13 +43,14 @@ const Home: React.FC = () => {
 						</div>
 					</div>
 					<div className="online-presence">
-						{ONLINE_PRESENCE_INFO.map((opi, i) => <OnlinePresenceEntry
+						{ONLINE_PRESENCE_INFO.map((opi, i) => <AnchorCard
 							key={i}
 							title={opi.title}
 							subtitle={opi.subtitle}
 							mainContent={opi.mainContent}
 							anchorHref={opi.anchorHref}
-							anchorText={opi.anchorText}/>)}
+							anchorText={opi.anchorText}
+							isDownload={opi.isDownload}/>)}
 					</div>
 					<div className="free-time-activities">
 						<IonList>

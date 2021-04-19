@@ -8,31 +8,39 @@ import {
 	IonCardTitle
 } from '@ionic/react';
 
-import { OnlinePresenceEntryProps } from 'src/properties';
+import { AnchorCardProps } from 'src/properties';
 
-import './OnlinePresenceEntry.scss';
+import './AnchorCard.scss';
 
-const OnlinePresenceEntry: React.FC<OnlinePresenceEntryProps> = (
+const AnchorCard: React.FC<AnchorCardProps> = (
 	{
 		title,
 		subtitle,
 		mainContent,
 		anchorHref,
-		anchorText
-	}: OnlinePresenceEntryProps
+		anchorText,
+		isDownload
+	}: AnchorCardProps
 ) => {
 	return (
-		<IonCard className="online-presence-entry">
+		<IonCard className="anchor-card">
 			<IonCardHeader>
 				<IonCardSubtitle>{title}</IonCardSubtitle>
 				<IonCardTitle>{subtitle}</IonCardTitle>
 			</IonCardHeader>
 			<IonCardContent>
 				<div>{mainContent}</div>
-				<a href={anchorHref}>{anchorText ? anchorText : anchorHref}</a>
+				<a
+					download={isDownload}
+					href={anchorHref}
+					target="_blank"
+					rel='noreferrer'
+				>
+					{anchorText ? anchorText : anchorHref}
+				</a>
 			</IonCardContent>
 		</IonCard>
 	);
 };
 
-export default OnlinePresenceEntry;
+export default AnchorCard;

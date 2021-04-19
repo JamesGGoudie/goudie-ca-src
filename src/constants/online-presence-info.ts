@@ -1,6 +1,14 @@
-import { OnlinePresenceEntryProps } from 'src/properties';
+import { AnchorCardProps } from 'src/properties';
 
-export const ONLINE_PRESENCE_INFO: OnlinePresenceEntryProps[] = [
+export const ONLINE_PRESENCE_INFO: AnchorCardProps[] = [
+	{
+		title: 'Resume',
+		subtitle: 'About Me',
+		mainContent: 'For a summary of my skills, professional experience, and education, you may download my resume.',
+		anchorHref: 'assets/files/JamesGabrielGoudie_Resume.pdf',
+		anchorText: 'Resume',
+		isDownload: true
+	},
 	{
 		title: 'GitHub',
 		subtitle: 'View my Work',
