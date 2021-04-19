@@ -5,8 +5,6 @@ import {
 	cogSharp,
 	homeOutline,
 	homeSharp,
-	informationCircleOutline,
-	informationCircleSharp,
 	schoolOutline,
 	schoolSharp
 } from 'ionicons/icons';
@@ -26,12 +24,14 @@ export const NAV_MENU_OPTIONS: AppPageGroup[] = [
 				iosIcon: homeOutline,
 				mdIcon: homeSharp
 			},
+			/*
 			{
 				title: 'About',
 				url: ROUTES.ABOUT,
 				iosIcon: informationCircleOutline,
 				mdIcon: informationCircleSharp
 			},
+			*/
 			{
 				title: 'Education',
 				url: ROUTES.EDUCATION,

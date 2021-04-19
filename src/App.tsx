@@ -3,7 +3,6 @@ import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
-import About from './pages/About';
 import Education from './pages/Education';
 import Experience from './pages/Experience';
 import Home from './pages/Home';
@@ -44,9 +43,11 @@ const App: React.FC = () => {
 						<Route path={ROUTES.HOME} exact={true}>
 							<Home />
 						</Route>
+						{/*
 						<Route path={ROUTES.ABOUT} exact={true}>
 							<About />
 						</Route>
+						*/}
 						<Route path={ROUTES.EDUCATION} exact={true}>
 							<Education />
 						</Route>
