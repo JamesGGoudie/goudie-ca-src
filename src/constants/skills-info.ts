@@ -313,7 +313,7 @@ export const SKILLS_INFO: SkillsGroupProps[] = [
 				summary: 'Single-Board Micro-controllers'
 			},
 			{
-				name: 'NCX',
+				name: 'NXC',
 				summary: 'Lego Mindstorms'
 			}
 		]
