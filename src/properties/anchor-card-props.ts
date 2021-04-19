@@ -4,5 +4,5 @@ export interface AnchorCardProps {
 	mainContent: string;
 	anchorHref: string;
 	anchorText?: string;
-	isDownload?: boolean;
+	directDownload?: boolean;
 }

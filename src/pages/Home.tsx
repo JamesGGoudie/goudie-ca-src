@@ -18,7 +18,7 @@ import {
 	FREE_TIME_INFO,
 	HOME_INTRO,
 	IMG_ALTS,
-	ONLINE_PRESENCE_INFO
+	HOME_ANCHOR_CARDS_INFO
 } from 'src/constants';
 
 import './Home.scss';
@@ -43,14 +43,14 @@ const Home: React.FC = () => {
 						</div>
 					</div>
 					<div className="online-presence">
-						{ONLINE_PRESENCE_INFO.map((opi, i) => <AnchorCard
+						{HOME_ANCHOR_CARDS_INFO.map((opi, i) => <AnchorCard
 							key={i}
 							title={opi.title}
 							subtitle={opi.subtitle}
 							mainContent={opi.mainContent}
 							anchorHref={opi.anchorHref}
 							anchorText={opi.anchorText}
-							isDownload={opi.isDownload}/>)}
+							directDownload={opi.directDownload}/>)}
 					</div>
 					<div className="free-time-activities">
 						<IonList>

@@ -19,7 +19,7 @@ const AnchorCard: React.FC<AnchorCardProps> = (
 		mainContent,
 		anchorHref,
 		anchorText,
-		isDownload
+		directDownload
 	}: AnchorCardProps
 ) => {
 	return (
@@ -31,7 +31,7 @@ const AnchorCard: React.FC<AnchorCardProps> = (
 			<IonCardContent>
 				<div>{mainContent}</div>
 				<a
-					download={isDownload}
+					download={directDownload}
 					href={anchorHref}
 					target="_blank"
 					rel='noreferrer'
