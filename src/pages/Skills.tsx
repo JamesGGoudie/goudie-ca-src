@@ -20,10 +20,12 @@ const Skills: React.FC = () => {
 			<IonContent >
 				<TopBarFullscreen title={title} />
 				<div className="page">
-					{SKILLS_INFO.map((skillsGroup, i) => <SkillsGroup key={i}
-						name={skillsGroup.name}
-						skills={skillsGroup.skills}
-					/>)}
+					<div className="skills">
+						{SKILLS_INFO.map((skillsGroup, i) => <SkillsGroup key={i}
+							name={skillsGroup.name}
+							skills={skillsGroup.skills}
+						/>)}
+					</div>
 				</div>
 			</IonContent>
 		</IonPage>

@@ -1,0 +1,13 @@
+.page {
+	.skills {
+		display: flex;
+
+		flex-wrap: wrap;
+
+		> * {
+			margin-left: 16px;
+
+			width: 400px;
+		}
+	}
+}
