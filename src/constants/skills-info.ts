@@ -144,6 +144,10 @@ export const SKILLS_INFO: SkillsGroupProps[] = [
 				summary: 'Configuration Management'
 			},
 			{
+				name: 'Heroku',
+				summary: 'Cloud Platform'
+			},
+			{
 				name: 'Apache Kafka',
 				summary: 'Stream Processing'
 			},
@@ -156,10 +160,6 @@ export const SKILLS_INFO: SkillsGroupProps[] = [
 				summary: 'In-Memory Database'
 			},
 			{
-				name: 'Apache Ant',
-				summary: 'Automate Software Build Processes'
-			},
-			{
 				name: 'Nginx',
 				summary: 'Web Server'
 			},
@@ -170,6 +170,10 @@ export const SKILLS_INFO: SkillsGroupProps[] = [
 			{
 				name: 'Keycloak',
 				summary: 'Identity and Access Management'
+			},
+			{
+				name: 'Apache Ant',
+				summary: 'Automate Software Build Processes'
 			}
 		]
 	},
