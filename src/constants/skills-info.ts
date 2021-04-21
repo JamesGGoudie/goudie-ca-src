@@ -222,6 +222,10 @@ export const SKILLS_INFO: SkillsGroupProps[] = [
 				summary: 'Python Math Support'
 			},
 			{
+				name: 'Selenium',
+				summary: 'Browser Automation'
+			},
+			{
 				name: 'Three.js',
 				summary: 'JavaScript 3D Graphics'
 			},
