@@ -396,8 +396,7 @@ export class WordleService {
 						return;
 					}
 
-					const knownLettersClone = cloneKnownLettersAndRemoveQueryStartIfPresent(nextLetter);
-					const usingWildcard = knownLetters.length === knownLettersClone.length;
+					const usingWildcard = knownLetters.indexOf(nextLetter) >= 0;
 
 					if (usingWildcard) {
 						if (deadLetters.find((deadLetter) => { return deadLetter === nextLetter; })) {
@@ -408,6 +407,7 @@ export class WordleService {
 						}
 					}
 
+					const knownLettersClone = cloneKnownLettersAndRemoveQueryStartIfPresent(nextLetter);
 					const deleteNextNode = this.applyQueryHelper(nextNode, query.slice(1), knownLettersClone, deadLetters, deadPositions, depth + 1);
 
 					deleteCount += deleteNextNode.deleteCount;
