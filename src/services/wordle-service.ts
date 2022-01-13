@@ -327,13 +327,24 @@ export class WordleService {
 		});
 	}
 
-	public static applyQuery(index: DataPoint, query: string, knownLetters: string[], deadLetters: string[], deadPositions: DeadPositionStat): void {
+	public static applyQuery(index: DataPoint, query: string, knownLetters: string, deadLetters: string, deadPositions: DeadPositionStat): void {
+		const knownLettersArr: string[] = [];
+		const deadLettersArr: string[] = [];
+
+		for (let i = 0; i < knownLetters.length; ++i) {
+			knownLettersArr.push(knownLetters[i]);
+		}
+		for (let i = 0; i < deadLetters.length; ++i) {
+			deadLettersArr.push(deadLetters[i]);
+		}
+
 		for (let i = 0; i < query.length; ++i) {
 			if (query[i] !== '*') {
-				knownLetters.push(query[i]);
+				knownLettersArr.push(query[i]);
 			}
 		}
-		this.applyQueryHelper(index, query, knownLetters, deadLetters, deadPositions, 0);
+
+		this.applyQueryHelper(index, query, knownLettersArr, deadLettersArr, deadPositions, 0);
 	}
 
 	public static applyQueryHelper(index: DataPoint, query: string, knownLetters: string[], deadLetters: string[], deadPositions: DeadPositionStat, depth: number): ApplyQueryResults {
