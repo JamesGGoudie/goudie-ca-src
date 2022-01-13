@@ -104,7 +104,7 @@ interface ApplyQueryResults {
 
 interface BestGuessResults {
 	suffix: string;
-	count: number;
+	letterPositionMatchCount: number;
 }
 
 interface DeadPositionStat {
@@ -170,45 +170,16 @@ export class WordleService {
 	}
 
 	public static getBestGuess(index: DataPoint): BestGuessResults[] {
-		const used: LetterUsed = {
-			a: -1,
-			b: -1,
-			c: -1,
-			d: -1,
-			e: -1,
-			f: -1,
-			g: -1,
-			h: -1,
-			i: -1,
-			j: -1,
-			k: -1,
-			l: -1,
-			m: -1,
-			n: -1,
-			o: -1,
-			p: -1,
-			q: -1,
-			r: -1,
-			s: -1,
-			t: -1,
-			u: -1,
-			v: -1,
-			w: -1,
-			x: -1,
-			y: -1,
-			z: -1
-		};
-
-		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), used, 0, false).sort((a, b) => {
-			return b.count - a.count;
+		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), 0).sort((a, b) => {
+			return b.letterPositionMatchCount - a.letterPositionMatchCount;
 		}).slice(0, 10);
 	}
 
-	private static getBestGuessHelper(index: DataPoint, letterUsage: LetterUsage, usedLetters: LetterUsed, depth: number, noDuplicates: boolean): BestGuessResults[] {
+	private static getBestGuessHelper(index: DataPoint, letterUsage: LetterUsage, depth: number): BestGuessResults[] {
 		if (!Object.keys(index.nextLetters).length) {
 			return [{
 				suffix: '',
-				count: 0
+				letterPositionMatchCount: 0
 			}];
 		}
 
@@ -217,18 +188,12 @@ export class WordleService {
 		Object.keys(index.nextLetters).forEach((letter) => {
 			const nextLetter = index.nextLetters[letter];
 
-			if (usedLetters[letter] !== -1 && noDuplicates) {
-				return;
-			}
-
 			if (nextLetter) {
-				usedLetters[letter] = 1;
-				const results = this.getBestGuessHelper(nextLetter, letterUsage, usedLetters, depth + 1, noDuplicates);
-				usedLetters[letter] = -1;
+				const results = this.getBestGuessHelper(nextLetter, letterUsage, depth + 1);
 
 				results.forEach((result) => {
 					output.push({
-						count: result.count + letterUsage[letter].uses[depth],
+						letterPositionMatchCount: result.letterPositionMatchCount + letterUsage[letter].uses[depth],
 						suffix: letter + result.suffix
 					});
 				});
