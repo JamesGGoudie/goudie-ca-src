@@ -328,6 +328,11 @@ export class WordleService {
 	}
 
 	public static applyQuery(index: DataPoint, query: string, knownLetters: string[], deadLetters: string[], deadPositions: DeadPositionStat): void {
+		for (let i = 0; i < query.length; ++i) {
+			if (query[i] !== '*') {
+				knownLetters.push(query[i]);
+			}
+		}
 		this.applyQueryHelper(index, query, knownLetters, deadLetters, deadPositions, 0);
 	}
 
@@ -372,18 +377,19 @@ export class WordleService {
 						throw new Error();
 					}
 
+					const deadPositionsForLetter = deadPositions[nextLetter];
+					if (deadPositionsForLetter && (deadPositionsForLetter.findIndex((deadPosition) => { return deadPosition === depth; }) >= 0)) {
+						deleteCount += index.nextLetters[nextLetter]?.count || 0;
+						delete index.nextLetters[nextLetter];
+
+						return;
+					}
+
 					const knownLettersClone = cloneKnownLettersAndRemoveQueryStartIfPresent(nextLetter);
 					const usingWildcard = knownLetters.length === knownLettersClone.length;
 
 					if (usingWildcard) {
 						if (deadLetters.find((deadLetter) => { return deadLetter === nextLetter; })) {
-							deleteCount += index.nextLetters[nextLetter]?.count || 0;
-							delete index.nextLetters[nextLetter];
-
-							return;
-						}
-						const deadPositionsForLetter = deadPositions[nextLetter];
-						if (deadPositionsForLetter && (deadPositionsForLetter.findIndex((deadPosition) => { return deadPosition === depth; }) >= 0)) {
 							deleteCount += index.nextLetters[nextLetter]?.count || 0;
 							delete index.nextLetters[nextLetter];
 
