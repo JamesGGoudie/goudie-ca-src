@@ -107,6 +107,36 @@ interface BestGuessResults {
 	count: number;
 }
 
+interface DeadPositionStat {
+	[letter: string]: number[] | undefined;
+	a?: number[];
+	b?: number[];
+	c?: number[];
+	d?: number[];
+	e?: number[];
+	f?: number[];
+	g?: number[];
+	h?: number[];
+	i?: number[];
+	j?: number[];
+	k?: number[];
+	l?: number[];
+	m?: number[];
+	n?: number[];
+	o?: number[];
+	p?: number[];
+	q?: number[];
+	r?: number[];
+	s?: number[];
+	t?: number[];
+	u?: number[];
+	v?: number[];
+	w?: number[];
+	x?: number[];
+	y?: number[];
+	z?: number[];
+}
+
 export class WordleService {
 
 	public static buildIndexFromRaw(words: string[]): DataPoint {
@@ -139,7 +169,7 @@ export class WordleService {
 		return root;
 	}
 
-	public static getBestGuess(index: DataPoint): BestGuessResults {
+	public static getBestGuess(index: DataPoint): BestGuessResults[] {
 		const used: LetterUsed = {
 			a: -1,
 			b: -1,
@@ -169,19 +199,21 @@ export class WordleService {
 			z: -1
 		};
 
-		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), used, 0, true);
+		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), used, 0, false).sort((a, b) => {
+			return b.count - a.count;
+		}).slice(0, 10);
 	}
 
-	private static getBestGuessHelper(index: DataPoint, letterUsage: LetterUsage, usedLetters: LetterUsed, depth: number, noDuplicates: boolean): BestGuessResults {
+	private static getBestGuessHelper(index: DataPoint, letterUsage: LetterUsage, usedLetters: LetterUsed, depth: number, noDuplicates: boolean): BestGuessResults[] {
 		if (!Object.keys(index.nextLetters).length) {
-			return {
+			return [{
 				suffix: '',
 				count: 0
-			};
+			}];
 		}
 
-		let maxCount = 0;
-		let maxSuffix = '';
+		const output: BestGuessResults[] = [];
+
 		Object.keys(index.nextLetters).forEach((letter) => {
 			const nextLetter = index.nextLetters[letter];
 
@@ -193,19 +225,17 @@ export class WordleService {
 				usedLetters[letter] = 1;
 				const results = this.getBestGuessHelper(nextLetter, letterUsage, usedLetters, depth + 1, noDuplicates);
 				usedLetters[letter] = -1;
-				const theoreticalCount = results.count + letterUsage[letter].uses[depth];
 
-				if (maxCount < theoreticalCount) {
-					maxCount = theoreticalCount;
-					maxSuffix = letter + results.suffix;
-				}
+				results.forEach((result) => {
+					output.push({
+						count: result.count + letterUsage[letter].uses[depth],
+						suffix: letter + result.suffix
+					});
+				});
 			}
 		});
 
-		return {
-			suffix: maxSuffix,
-			count: maxCount
-		};
+		return output;
 	}
 
 	public static countLetterUse(index: DataPoint): LetterUsage {
@@ -297,11 +327,11 @@ export class WordleService {
 		});
 	}
 
-	public static applyQuery(index: DataPoint, query: string, knownLetters: string[], deadLetters: string[]): void {
-		this.applyQueryHelper(index, query, knownLetters, deadLetters);
+	public static applyQuery(index: DataPoint, query: string, knownLetters: string[], deadLetters: string[], deadPositions: DeadPositionStat): void {
+		this.applyQueryHelper(index, query, knownLetters, deadLetters, deadPositions, 0);
 	}
 
-	public static applyQueryHelper(index: DataPoint, query: string, knownLetters: string[], deadLetters: string[]): ApplyQueryResults {
+	public static applyQueryHelper(index: DataPoint, query: string, knownLetters: string[], deadLetters: string[], deadPositions: DeadPositionStat, depth: number): ApplyQueryResults {
 		if (query.length === 0) {
 			const deleteNode = knownLetters.length !== 0;
 			const deleteCount = deleteNode ? 1 : 0;
@@ -343,6 +373,13 @@ export class WordleService {
 
 						return;
 					}
+					const deadPositionsForLetter = deadPositions[nextLetter];
+					if (deadPositionsForLetter && (deadPositionsForLetter.findIndex((deadPosition) => { return deadPosition === depth; }) >= 0)) {
+						deleteCount += index.nextLetters[nextLetter]?.count || 0;
+						delete index.nextLetters[nextLetter];
+
+						return;
+					}
 
 					const nextNode = index.nextLetters[nextLetter];
 					if (!nextNode) {
@@ -350,7 +387,7 @@ export class WordleService {
 					}
 
 					const knownLettersClone = cloneKnownLettersAndRemoveQueryStartIfPresent(nextLetter);
-					const deleteNextNode = this.applyQueryHelper(nextNode, query.slice(1), knownLettersClone, deadLetters);
+					const deleteNextNode = this.applyQueryHelper(nextNode, query.slice(1), knownLettersClone, deadLetters, deadPositions, depth + 1);
 
 					deleteCount += deleteNextNode.deleteCount;
 
@@ -377,7 +414,7 @@ export class WordleService {
 						}
 
 						const knownLettersClone = cloneKnownLettersAndRemoveQueryStartIfPresent(nextLetter);
-						const deleteNextNode = this.applyQueryHelper(nextNode, query.slice(1), knownLettersClone, deadLetters);
+						const deleteNextNode = this.applyQueryHelper(nextNode, query.slice(1), knownLettersClone, deadLetters, deadPositions, depth + 1);
 
 						deleteCount += deleteNextNode.deleteCount;
 
@@ -420,7 +457,7 @@ export class WordleService {
 			});
 
 			const knownLettersClone = cloneKnownLettersAndRemoveQueryStartIfPresent(query[0]);
-			const deleteNextNode = this.applyQueryHelper(nextNode, query.slice(1), knownLettersClone, deadLetters);
+			const deleteNextNode = this.applyQueryHelper(nextNode, query.slice(1), knownLettersClone, deadLetters, deadPositions, depth + 1);
 
 			deleteCount += deleteNextNode.deleteCount;
 
