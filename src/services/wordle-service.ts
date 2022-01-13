@@ -169,13 +169,42 @@ export class WordleService {
 		return root;
 	}
 
-	public static getBestGuess(index: DataPoint): BestGuessResults[] {
-		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), 0).sort((a, b) => {
+	public static getBestGuess(index: DataPoint, avoidDups = false): BestGuessResults[] {
+		const usedLetters: LetterUsed | undefined = avoidDups ? {
+			a: -1,
+			b: -1,
+			c: -1,
+			d: -1,
+			e: -1,
+			f: -1,
+			g: -1,
+			h: -1,
+			i: -1,
+			j: -1,
+			k: -1,
+			l: -1,
+			m: -1,
+			n: -1,
+			o: -1,
+			p: -1,
+			q: -1,
+			r: -1,
+			s: -1,
+			t: -1,
+			u: -1,
+			v: -1,
+			w: -1,
+			x: -1,
+			y: -1,
+			z: -1
+		} : undefined;
+
+		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), 0, usedLetters).sort((a, b) => {
 			return b.positionCount - a.positionCount;
 		});
 	}
 
-	private static getBestGuessHelper(index: DataPoint, letterUsage: LetterUsage, depth: number): BestGuessResults[] {
+	private static getBestGuessHelper(index: DataPoint, letterUsage: LetterUsage, depth: number, usedLetters?: LetterUsed): BestGuessResults[] {
 		if (!Object.keys(index.nextLetters).length) {
 			return [{
 				suffix: '',
@@ -188,16 +217,27 @@ export class WordleService {
 		Object.keys(index.nextLetters).forEach((letter) => {
 			const nextLetter = index.nextLetters[letter];
 
-			if (nextLetter) {
-				const results = this.getBestGuessHelper(nextLetter, letterUsage, depth + 1);
-
-				results.forEach((result) => {
-					output.push({
-						positionCount: result.positionCount + letterUsage[letter].uses[depth],
-						suffix: letter + result.suffix
-					});
-				});
+			if (!nextLetter) {
+				throw new Error();
 			}
+			if (usedLetters) {
+				if (usedLetters[letter] === -1) {
+					usedLetters[letter] = depth;
+				} else {
+					return;
+				}
+			}
+			const results = this.getBestGuessHelper(nextLetter, letterUsage, depth + 1, usedLetters);
+			if (usedLetters && usedLetters[letter] === depth) {
+				usedLetters[letter] = -1;
+			}
+
+			results.forEach((result) => {
+				output.push({
+					positionCount: result.positionCount + letterUsage[letter].uses[depth],
+					suffix: letter + result.suffix
+				});
+			});
 		});
 
 		return output;
