@@ -104,7 +104,7 @@ interface ApplyQueryResults {
 
 interface BestGuessResults {
 	suffix: string;
-	letterPositionMatchCount: number;
+	positionCount: number;
 }
 
 interface DeadPositionStat {
@@ -171,15 +171,15 @@ export class WordleService {
 
 	public static getBestGuess(index: DataPoint): BestGuessResults[] {
 		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), 0).sort((a, b) => {
-			return b.letterPositionMatchCount - a.letterPositionMatchCount;
-		}).slice(0, 10);
+			return b.positionCount - a.positionCount;
+		});
 	}
 
 	private static getBestGuessHelper(index: DataPoint, letterUsage: LetterUsage, depth: number): BestGuessResults[] {
 		if (!Object.keys(index.nextLetters).length) {
 			return [{
 				suffix: '',
-				letterPositionMatchCount: 0
+				positionCount: 0
 			}];
 		}
 
@@ -193,7 +193,7 @@ export class WordleService {
 
 				results.forEach((result) => {
 					output.push({
-						letterPositionMatchCount: result.letterPositionMatchCount + letterUsage[letter].uses[depth],
+						positionCount: result.positionCount + letterUsage[letter].uses[depth],
 						suffix: letter + result.suffix
 					});
 				});
