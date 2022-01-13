@@ -367,26 +367,30 @@ export class WordleService {
 			if (wildcardsRemaining > 0) {
 				let deleteCount = 0;
 				Object.keys(index.nextLetters).forEach((nextLetter) => {
-					if (deadLetters.find((deadLetter) => { return deadLetter === nextLetter; })) {
-						deleteCount += index.nextLetters[nextLetter]?.count || 0;
-						delete index.nextLetters[nextLetter];
-
-						return;
-					}
-					const deadPositionsForLetter = deadPositions[nextLetter];
-					if (deadPositionsForLetter && (deadPositionsForLetter.findIndex((deadPosition) => { return deadPosition === depth; }) >= 0)) {
-						deleteCount += index.nextLetters[nextLetter]?.count || 0;
-						delete index.nextLetters[nextLetter];
-
-						return;
-					}
-
 					const nextNode = index.nextLetters[nextLetter];
 					if (!nextNode) {
 						throw new Error();
 					}
 
 					const knownLettersClone = cloneKnownLettersAndRemoveQueryStartIfPresent(nextLetter);
+					const usingWildcard = knownLetters.length === knownLettersClone.length;
+
+					if (usingWildcard) {
+						if (deadLetters.find((deadLetter) => { return deadLetter === nextLetter; })) {
+							deleteCount += index.nextLetters[nextLetter]?.count || 0;
+							delete index.nextLetters[nextLetter];
+
+							return;
+						}
+						const deadPositionsForLetter = deadPositions[nextLetter];
+						if (deadPositionsForLetter && (deadPositionsForLetter.findIndex((deadPosition) => { return deadPosition === depth; }) >= 0)) {
+							deleteCount += index.nextLetters[nextLetter]?.count || 0;
+							delete index.nextLetters[nextLetter];
+
+							return;
+						}
+					}
+
 					const deleteNextNode = this.applyQueryHelper(nextNode, query.slice(1), knownLettersClone, deadLetters, deadPositions, depth + 1);
 
 					deleteCount += deleteNextNode.deleteCount;
