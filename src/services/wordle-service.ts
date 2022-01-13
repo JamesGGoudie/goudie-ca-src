@@ -338,12 +338,6 @@ export class WordleService {
 			deadLettersArr.push(deadLetters[i]);
 		}
 
-		for (let i = 0; i < query.length; ++i) {
-			if (query[i] !== '*') {
-				knownLettersArr.push(query[i]);
-			}
-		}
-
 		this.applyQueryHelper(index, query, knownLettersArr, deadLettersArr, deadPositions, 0);
 	}
 
@@ -477,7 +471,7 @@ export class WordleService {
 				}
 			});
 
-			const knownLettersClone = cloneKnownLettersAndRemoveQueryStartIfPresent(query[0]);
+			const knownLettersClone = Array.from(knownLetters);
 			const deleteNextNode = this.applyQueryHelper(nextNode, query.slice(1), knownLettersClone, deadLetters, deadPositions, depth + 1);
 
 			deleteCount += deleteNextNode.deleteCount;
