@@ -396,7 +396,7 @@ export class WordleService {
 						return;
 					}
 
-					const usingWildcard = knownLetters.indexOf(nextLetter) >= 0;
+					const usingWildcard = knownLetters.indexOf(nextLetter) == -1;
 
 					if (usingWildcard) {
 						if (deadLetters.find((deadLetter) => { return deadLetter === nextLetter; })) {
