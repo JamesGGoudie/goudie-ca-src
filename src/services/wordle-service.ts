@@ -1,35 +1,5 @@
-interface DataPoint {
-	count: number;
-	nextLetters: {
-		[letter: string]: DataPoint | undefined;
-		a?: DataPoint;
-		b?: DataPoint;
-		c?: DataPoint;
-		d?: DataPoint;
-		e?: DataPoint;
-		f?: DataPoint;
-		g?: DataPoint;
-		h?: DataPoint;
-		i?: DataPoint;
-		j?: DataPoint;
-		k?: DataPoint;
-		l?: DataPoint;
-		m?: DataPoint;
-		n?: DataPoint;
-		o?: DataPoint;
-		p?: DataPoint;
-		q?: DataPoint;
-		r?: DataPoint;
-		s?: DataPoint;
-		t?: DataPoint;
-		u?: DataPoint;
-		v?: DataPoint;
-		w?: DataPoint;
-		x?: DataPoint;
-		y?: DataPoint;
-		z?: DataPoint;
-	}
-}
+import { WORDLE_INDEX_ROOT } from 'src/constants/wordle-index-root';
+import { WordleNode } from 'src/interfaces/wordle-node';
 
 interface LetterUsageStats {
 	uniqueWords: number;
@@ -139,10 +109,13 @@ interface DeadPositionStat {
 
 export class WordleService {
 
-	public static buildIndexFromRaw(words: string[]): DataPoint {
-		const root: DataPoint = {
-			count: 0,
-			nextLetters: {}
+	public static getIndexClone(): WordleNode {
+		return Object.assign({}, WORDLE_INDEX_ROOT);
+	}
+
+	public static buildIndexFromRaw(words: string[]): WordleNode {
+		const root: WordleNode = {
+			count: 0
 		};
 
 		for (const word of words) {
@@ -151,25 +124,34 @@ export class WordleService {
 			for (let i = 0; i < word.length; ++i) {
 				const letter = word[i];
 
-				if (!currPoint.nextLetters[letter]) {
-					const newPoint = {
-						count: i === word.length - 1 ? 1 : 0,
-						nextLetters: {}
+				if (!currPoint.nextLetters) {
+					currPoint.nextLetters = {};
+				}
+
+				const nextLetters = currPoint.nextLetters;
+
+				if (!nextLetters[letter]) {
+					const newPoint: WordleNode = {
+						count: i === word.length - 1 ? 1 : 0
 					};
-					currPoint.nextLetters[letter] = newPoint;
+					nextLetters[letter] = newPoint;
+				}
+
+				const newPoint = nextLetters[letter];
+
+				if (!newPoint) {
+					throw new Error();
 				}
 
 				currPoint.count += 1;
-
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				currPoint = currPoint.nextLetters[letter]!;
+				currPoint = newPoint;
 			}
 		}
 
 		return root;
 	}
 
-	public static getBestGuess(index: DataPoint, avoidDups = false): BestGuessResults[] {
+	public static getBestGuess(index: WordleNode, avoidDups = false): BestGuessResults[] {
 		const usedLetters: LetterUsed | undefined = avoidDups ? {
 			a: -1,
 			b: -1,
@@ -204,8 +186,9 @@ export class WordleService {
 		});
 	}
 
-	private static getBestGuessHelper(index: DataPoint, letterUsage: LetterUsage, depth: number, usedLetters?: LetterUsed): BestGuessResults[] {
-		if (!Object.keys(index.nextLetters).length) {
+	private static getBestGuessHelper(index: WordleNode, letterUsage: LetterUsage, depth: number, usedLetters?: LetterUsed): BestGuessResults[] {
+		const nextLetters = index.nextLetters;
+		if (!(nextLetters && Object.keys(nextLetters).length)) {
 			return [{
 				suffix: '',
 				positionCount: 0
@@ -214,8 +197,8 @@ export class WordleService {
 
 		const output: BestGuessResults[] = [];
 
-		Object.keys(index.nextLetters).forEach((letter) => {
-			const nextLetter = index.nextLetters[letter];
+		Object.keys(nextLetters).forEach((letter) => {
+			const nextLetter = nextLetters[letter];
 
 			if (!nextLetter) {
 				throw new Error();
@@ -243,7 +226,7 @@ export class WordleService {
 		return output;
 	}
 
-	public static countLetterUse(index: DataPoint): LetterUsage {
+	public static countLetterUse(index: WordleNode): LetterUsage {
 		const usage: LetterUsage = {
 			a: { uniqueWords: 0, average: 0, uses: [] },
 			b: { uniqueWords: 0, average: 0, uses: [] },
@@ -314,9 +297,14 @@ export class WordleService {
 		return usage;
 	}
 
-	public static countLetterUseHelper(index: DataPoint, usage: LetterUsage, used: LetterUsed, depth: number): void {
-		Object.keys(index.nextLetters).forEach((key) => {
-			const value = index.nextLetters[key];
+	public static countLetterUseHelper(index: WordleNode, usage: LetterUsage, used: LetterUsed, depth: number): void {
+		const nextLetters = index.nextLetters;
+		if (!nextLetters) {
+			return;
+		}
+
+		Object.keys(nextLetters).forEach((key) => {
+			const value = nextLetters[key];
 
 			if (value) {
 				if (used[key] === -1) {
@@ -332,7 +320,7 @@ export class WordleService {
 		});
 	}
 
-	public static applyQuery(index: DataPoint, query: string, knownLetters: string, deadLetters: string, deadPositions: DeadPositionStat): void {
+	public static applyQuery(index: WordleNode, query: string, knownLetters: string, deadLetters: string, deadPositions: DeadPositionStat): void {
 		const knownLettersArr: string[] = [];
 		const deadLettersArr: string[] = [];
 
@@ -343,11 +331,27 @@ export class WordleService {
 			deadLettersArr.push(deadLetters[i]);
 		}
 
-		this.applyQueryHelper(index, query, knownLettersArr, deadLettersArr, deadPositions, 0);
+		console.log(deadPositions);
+		const deadPositionsClone = Object.assign({}, deadPositions);
+		Object.keys(deadPositionsClone).forEach((key) => {
+			const value = deadPositionsClone[key];
+
+			if (value) {
+				deadPositionsClone[key] = value.map((position) => {
+					return position - 1;
+				});
+			}
+		});
+
+		console.log(deadPositionsClone);
+
+		this.applyQueryHelper(index, query, knownLettersArr, deadLettersArr, deadPositionsClone, 0);
 	}
 
-	public static applyQueryHelper(index: DataPoint, query: string, knownLetters: string[], deadLetters: string[], deadPositions: DeadPositionStat, depth: number): ApplyQueryResults {
-		if (query.length === 0) {
+	private static applyQueryHelper(index: WordleNode, query: string, knownLetters: string[], deadLetters: string[], deadPositions: DeadPositionStat, depth: number): ApplyQueryResults {
+		const nextLetters = index.nextLetters;
+
+		if (query.length === 0 || !nextLetters) {
 			const deleteNode = knownLetters.length !== 0;
 			const deleteCount = deleteNode ? 1 : 0;
 
@@ -381,16 +385,16 @@ export class WordleService {
 		if (query[0] === '*') {
 			if (wildcardsRemaining > 0) {
 				let deleteCount = 0;
-				Object.keys(index.nextLetters).forEach((nextLetter) => {
-					const nextNode = index.nextLetters[nextLetter];
+				Object.keys(nextLetters).forEach((nextLetter) => {
+					const nextNode = nextLetters[nextLetter];
 					if (!nextNode) {
 						throw new Error();
 					}
 
 					const deadPositionsForLetter = deadPositions[nextLetter];
 					if (deadPositionsForLetter && (deadPositionsForLetter.findIndex((deadPosition) => { return deadPosition === depth; }) >= 0)) {
-						deleteCount += index.nextLetters[nextLetter]?.count || 0;
-						delete index.nextLetters[nextLetter];
+						deleteCount += nextLetters[nextLetter]?.count || 0;
+						delete nextLetters[nextLetter];
 
 						return;
 					}
@@ -399,8 +403,8 @@ export class WordleService {
 
 					if (usingWildcard) {
 						if (deadLetters.find((deadLetter) => { return deadLetter === nextLetter; })) {
-							deleteCount += index.nextLetters[nextLetter]?.count || 0;
-							delete index.nextLetters[nextLetter];
+							deleteCount += nextLetters[nextLetter]?.count || 0;
+							delete nextLetters[nextLetter];
 
 							return;
 						}
@@ -412,25 +416,33 @@ export class WordleService {
 					deleteCount += deleteNextNode.deleteCount;
 
 					if (deleteNextNode.deleteNode) {
-						deleteCount += index.nextLetters[nextLetter]?.count || 0;
-						delete index.nextLetters[nextLetter];
+						deleteCount += nextLetters[nextLetter]?.count || 0;
+						delete nextLetters[nextLetter];
 					}
 				});
 
 				index.count -= deleteCount;
 
 				return {
-					deleteNode: Object.keys(index.nextLetters).length === 0,
+					deleteNode: Object.keys(nextLetters).length === 0,
 					deleteCount
 				};
 			} else {
 				const knownLettersSet = buildKnownLettersSet();
 				let deleteCount = 0;
-				Object.keys(index.nextLetters).forEach((nextLetter) => {
+				Object.keys(nextLetters).forEach((nextLetter) => {
 					if (knownLettersSet.has(nextLetter)) {
-						const nextNode = index.nextLetters[nextLetter];
+						const nextNode = nextLetters[nextLetter];
 						if (!nextNode) {
 							throw new Error();
+						}
+
+						const deadPositionsForLetter = deadPositions[nextLetter];
+						if (deadPositionsForLetter && (deadPositionsForLetter.findIndex((deadPosition) => { return deadPosition === depth; }) >= 0)) {
+							deleteCount += nextLetters[nextLetter]?.count || 0;
+							delete nextLetters[nextLetter];
+
+							return;
 						}
 
 						const knownLettersClone = cloneKnownLettersAndRemoveQueryStartIfPresent(nextLetter);
@@ -439,24 +451,24 @@ export class WordleService {
 						deleteCount += deleteNextNode.deleteCount;
 
 						if (deleteNextNode.deleteNode) {
-							deleteCount += index.nextLetters[nextLetter]?.count || 0;
-							delete index.nextLetters[nextLetter];
+							deleteCount += nextLetters[nextLetter]?.count || 0;
+							delete nextLetters[nextLetter];
 						}
 					} else {
-						deleteCount += index.nextLetters[nextLetter]?.count || 0;
-						delete index.nextLetters[nextLetter];
+						deleteCount += nextLetters[nextLetter]?.count || 0;
+						delete nextLetters[nextLetter];
 					}
 				});
 
 				index.count -= deleteCount;
 
 				return {
-					deleteNode: Object.keys(index.nextLetters).length === 0,
+					deleteNode: Object.keys(nextLetters).length === 0,
 					deleteCount
 				};
 			}
 		} else {
-			const nextNode = index.nextLetters[query[0]];
+			const nextNode = nextLetters[query[0]];
 
 			if (!nextNode) {
 				const deleteCount = index.count;
@@ -469,10 +481,10 @@ export class WordleService {
 			}
 
 			let deleteCount = 0;
-			Object.keys(index.nextLetters).forEach((key) => {
+			Object.keys(nextLetters).forEach((key) => {
 				if (key !== query[0]) {
-					deleteCount += index.nextLetters[key]?.count || 0;
-					delete index.nextLetters[key];
+					deleteCount += nextLetters[key]?.count || 0;
+					delete nextLetters[key];
 				}
 			});
 
@@ -482,8 +494,8 @@ export class WordleService {
 			deleteCount += deleteNextNode.deleteCount;
 
 			if (deleteNextNode.deleteNode) {
-				deleteCount += index.nextLetters[query[0]]?.count || 0;
-				delete index.nextLetters[query[0]];
+				deleteCount += nextLetters[query[0]]?.count || 0;
+				delete nextLetters[query[0]];
 			}
 
 			index.count -= deleteCount;

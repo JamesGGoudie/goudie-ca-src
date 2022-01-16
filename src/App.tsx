@@ -29,6 +29,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.scss';
+import WordleHelper from './pages/WordleHelper';
 
 const App: React.FC = () => {
 	return (
@@ -56,6 +57,9 @@ const App: React.FC = () => {
 						</Route>
 						<Route path={ROUTES.SKILLS} exact={true}>
 							<Skills />
+						</Route>
+						<Route path={ROUTES.WORDLE_HELPER} exact={true}>
+							<WordleHelper />
 						</Route>
 						<Route>
 							<NotFound />
