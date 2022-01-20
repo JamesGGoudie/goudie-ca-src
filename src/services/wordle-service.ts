@@ -109,8 +109,38 @@ interface DeadPositionStat {
 
 export class WordleService {
 
-	public static getIndexClone(): WordleNode {
-		return Object.assign({}, WORDLE_INDEX_ROOT);
+	public static getRootClone(): WordleNode {
+		const clone = WordleService.getRootCloneHelper(WORDLE_INDEX_ROOT);
+
+		if (!clone) {
+			throw new Error();
+		}
+
+		return clone;
+	}
+
+	private static getRootCloneHelper(source?: WordleNode): WordleNode | undefined {
+		if (!source) {
+			return;
+		}
+
+		const target: WordleNode = {
+			count: source.count
+		};
+
+		if (!source.nextLetters) {
+			return target;
+		}
+
+		target.nextLetters = {};
+		Object.entries(source.nextLetters).forEach(([letter, node]) => {
+			if (!target.nextLetters) {
+				throw new Error();
+			}
+			target.nextLetters[letter] = WordleService.getRootCloneHelper(node);
+		});
+
+		return target;
 	}
 
 	public static buildIndexFromRaw(words: string[]): WordleNode {

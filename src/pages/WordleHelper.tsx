@@ -41,10 +41,10 @@ const WordleHelper: React.FC = () => {
 						<KeyValueBuilder keyValuePairs={deadPositions} onKeyValuePairsUpdate={e => setDeadPositions(e)}></KeyValueBuilder>
 						<IonButton
 							onClick={() => {
-								const root = WordleService.getIndexClone();
+								const root = WordleService.getRootClone();
 								WordleService.applyQuery(
 									root,
-									query || '',
+									query || '*****',
 									knownLetters || '',
 									deadLetters || '',
 									deadPositions || {}
