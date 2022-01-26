@@ -1,7 +1,7 @@
 import React from 'react';
 import { WordleCellState } from 'src/enums';
 import { WordleGridData } from 'src/interfaces';
-import { WordleGridProps } from 'src/properties/wordle/wordle-grid-props';
+import { WordleGridProps } from 'src/properties';
 
 import './WordleGrid.scss';
 import WordleRow from './WordleRow';

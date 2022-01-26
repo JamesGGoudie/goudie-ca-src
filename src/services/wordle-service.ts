@@ -1,5 +1,5 @@
 import { WORDLE_INDEX_ROOT } from 'src/constants/wordle-index-root';
-import { WordleDeadPositions, WordleNode } from 'src/interfaces';
+import { WordleDeadPositions, WordleGuess, WordleNode } from 'src/interfaces';
 
 interface LetterUsageStats {
 	uniqueWords: number;
@@ -70,11 +70,6 @@ interface LetterUsed {
 interface ApplyQueryResults {
 	deleteCount: number;
 	deleteNode: boolean;
-}
-
-interface BestGuessResults {
-	suffix: string;
-	positionCount: number;
 }
 
 export class WordleService {
@@ -151,7 +146,7 @@ export class WordleService {
 		return root;
 	}
 
-	public static getBestGuess(index: WordleNode, avoidDups = false): BestGuessResults[] {
+	public static getBestGuess(index: WordleNode, avoidDups = false): WordleGuess[] {
 		const usedLetters: LetterUsed | undefined = avoidDups ? {
 			a: -1,
 			b: -1,
@@ -182,20 +177,20 @@ export class WordleService {
 		} : undefined;
 
 		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), 0, usedLetters).sort((a, b) => {
-			return b.positionCount - a.positionCount;
+			return b.score - a.score;
 		});
 	}
 
-	private static getBestGuessHelper(index: WordleNode, letterUsage: LetterUsage, depth: number, usedLetters?: LetterUsed): BestGuessResults[] {
+	private static getBestGuessHelper(index: WordleNode, letterUsage: LetterUsage, depth: number, usedLetters?: LetterUsed): WordleGuess[] {
 		const nextLetters = index.nextLetters;
 		if (!(nextLetters && Object.keys(nextLetters).length)) {
 			return [{
-				suffix: '',
-				positionCount: 0
+				guess: '',
+				score: 0
 			}];
 		}
 
-		const output: BestGuessResults[] = [];
+		const output: WordleGuess[] = [];
 
 		Object.keys(nextLetters).forEach((letter) => {
 			const nextLetter = nextLetters[letter];
@@ -217,8 +212,8 @@ export class WordleService {
 
 			results.forEach((result) => {
 				output.push({
-					positionCount: result.positionCount + letterUsage[letter].uses[depth],
-					suffix: letter + result.suffix
+					score: result.score + letterUsage[letter].uses[depth],
+					guess: letter + result.guess
 				});
 			});
 		});

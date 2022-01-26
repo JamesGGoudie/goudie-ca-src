@@ -1,8 +1,14 @@
 .wordle-helper-page {
 	margin: 1em;
+	display: flex;
+	gap: 1em;
 
 	.run-controls {
 		display: flex;
 		gap: 1em;
+	}
+
+	.output {
+		width: 10em;
 	}
 }
