@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IonButton, IonContent, IonPage, IonToggle } from '@ionic/react';
+import { IonButton, IonContent, IonItem, IonLabel, IonPage, IonToggle } from '@ionic/react';
 
 import TopBar from 'src/components/TopBar';
 import TopBarFullscreen from 'src/components/TopBarFullscreen';
@@ -16,7 +16,7 @@ const WordleHelper: React.FC = () => {
 	const [query, setQuery] = useState<string>();
 	const [knownLetters, setKnownLetters] = useState<string[]>();
 	const [deadLetters, setDeadLetters] = useState<string[]>();
-	const [noDups, setNoDups] = useState(false);
+	const [allowDups, setAllowDuplicateLetters] = useState(false);
 	const [deadPositions, setDeadPositions] = useState<WordleDeadPositions>();
 
 	return (
@@ -77,24 +77,29 @@ const WordleHelper: React.FC = () => {
 						setDeadLetters(deadLetters);
 						setDeadPositions(deadPositions);
 					}}></WordleGrid>
-					<IonToggle checked={noDups} onIonChange={e => setNoDups(e.detail.checked)} />
-					<IonButton
-						onClick={() => {
-							if (!(query && knownLetters && deadLetters && deadPositions)) {
-								return;
-							}
-							const root = WordleService.getRootClone();
-							WordleService.applyQuery(
-								root,
-								query,
-								knownLetters,
-								deadLetters,
-								deadPositions
-							);
-							console.log(WordleService.getBestGuess(root, noDups));
-						}}>
-							Run
-					</IonButton>
+					<div className="run-controls">
+						<IonItem>
+							<IonLabel>Allow Duplicate Letters</IonLabel>
+							<IonToggle checked={allowDups} onIonChange={e => setAllowDuplicateLetters(e.detail.checked)} />
+						</IonItem>
+						<IonButton
+							onClick={() => {
+								if (!(query && knownLetters && deadLetters && deadPositions)) {
+									return;
+								}
+								const root = WordleService.getRootClone();
+								WordleService.applyQuery(
+									root,
+									query,
+									knownLetters,
+									deadLetters,
+									deadPositions
+								);
+								console.log(WordleService.getBestGuess(root, !allowDups));
+							}}>
+								Run
+						</IonButton>
+					</div>
 				</div>
 			</IonContent>
 		</IonPage>
