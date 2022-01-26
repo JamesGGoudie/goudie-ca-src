@@ -1,0 +1,22 @@
+.wordle-cell {
+	outline: var(--ion-color-secondary) solid 1px;
+	width: 3em;
+	height: 3em;
+	text-align: center;
+
+	&.unknown {
+		background-color: var(--ion-background-color);
+	}
+
+	&.dead {
+		background-color: var(--ion-color-danger);
+	}
+
+	&.known {
+		background-color: var(--ion-color-warning);
+	}
+
+	&.confirmed {
+		background-color: var(--ion-color-success);
+	}
+}

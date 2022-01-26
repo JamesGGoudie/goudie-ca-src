@@ -1,5 +1,5 @@
 import { WORDLE_INDEX_ROOT } from 'src/constants/wordle-index-root';
-import { WordleNode } from 'src/interfaces/wordle-node';
+import { WordleDeadPositions, WordleNode } from 'src/interfaces';
 
 interface LetterUsageStats {
 	uniqueWords: number;
@@ -75,36 +75,6 @@ interface ApplyQueryResults {
 interface BestGuessResults {
 	suffix: string;
 	positionCount: number;
-}
-
-interface DeadPositionStat {
-	[letter: string]: number[] | undefined;
-	a?: number[];
-	b?: number[];
-	c?: number[];
-	d?: number[];
-	e?: number[];
-	f?: number[];
-	g?: number[];
-	h?: number[];
-	i?: number[];
-	j?: number[];
-	k?: number[];
-	l?: number[];
-	m?: number[];
-	n?: number[];
-	o?: number[];
-	p?: number[];
-	q?: number[];
-	r?: number[];
-	s?: number[];
-	t?: number[];
-	u?: number[];
-	v?: number[];
-	w?: number[];
-	x?: number[];
-	y?: number[];
-	z?: number[];
 }
 
 export class WordleService {
@@ -350,35 +320,11 @@ export class WordleService {
 		});
 	}
 
-	public static applyQuery(index: WordleNode, query: string, knownLetters: string, deadLetters: string, deadPositions: DeadPositionStat): void {
-		const knownLettersArr: string[] = [];
-		const deadLettersArr: string[] = [];
-
-		for (let i = 0; i < knownLetters.length; ++i) {
-			knownLettersArr.push(knownLetters[i]);
-		}
-		for (let i = 0; i < deadLetters.length; ++i) {
-			deadLettersArr.push(deadLetters[i]);
-		}
-
-		console.log(deadPositions);
-		const deadPositionsClone = Object.assign({}, deadPositions);
-		Object.keys(deadPositionsClone).forEach((key) => {
-			const value = deadPositionsClone[key];
-
-			if (value) {
-				deadPositionsClone[key] = value.map((position) => {
-					return position - 1;
-				});
-			}
-		});
-
-		console.log(deadPositionsClone);
-
-		this.applyQueryHelper(index, query, knownLettersArr, deadLettersArr, deadPositionsClone, 0);
+	public static applyQuery(index: WordleNode, query: string, knownLetters: string[], deadLetters: string[], deadPositions: WordleDeadPositions): void {
+		this.applyQueryHelper(index, query, knownLetters, deadLetters, deadPositions, 0);
 	}
 
-	private static applyQueryHelper(index: WordleNode, query: string, knownLetters: string[], deadLetters: string[], deadPositions: DeadPositionStat, depth: number): ApplyQueryResults {
+	private static applyQueryHelper(index: WordleNode, query: string, knownLetters: string[], deadLetters: string[], deadPositions: WordleDeadPositions, depth: number): ApplyQueryResults {
 		const nextLetters = index.nextLetters;
 
 		if (query.length === 0 || !nextLetters) {

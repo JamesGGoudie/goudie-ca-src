@@ -1,4 +1,4 @@
-import { WordleNode } from 'src/interfaces/wordle-node';
+import { WordleNode } from 'src/interfaces';
 
 export const WORDLE_INDEX_ROOT: WordleNode = {
 	count: 12972,

@@ -1,3 +1,5 @@
+export * from './wordle';
+
 export * from './course-entry-props';
 export * from './anchor-card-props';
 export * from './skills-group-props';
