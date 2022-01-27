@@ -3,8 +3,6 @@ import {
 	briefcaseSharp,
 	cogOutline,
 	cogSharp,
-	extensionPuzzleOutline,
-	extensionPuzzleSharp,
 	homeOutline,
 	homeSharp,
 	schoolOutline,
@@ -52,12 +50,14 @@ export const NAV_MENU_OPTIONS: AppPageGroup[] = [
 				iosIcon: cogOutline,
 				mdIcon: cogSharp
 			},
+			/*
 			{
 				title: 'Wordle Helper',
 				url: ROUTES.WORDLE_HELPER,
 				iosIcon: extensionPuzzleOutline,
 				mdIcon: extensionPuzzleSharp
 			}
+			*/
 		]
 	}
 ];
