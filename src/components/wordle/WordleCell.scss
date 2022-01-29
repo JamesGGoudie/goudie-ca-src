@@ -4,12 +4,8 @@
 	height: 3em;
 	text-align: center;
 
-	&.unknown {
-		background-color: var(--ion-background-color);
-	}
-
 	&.dead {
-		background-color: var(--ion-color-danger);
+		background-color: var(--ion-background-color);
 	}
 
 	&.known {

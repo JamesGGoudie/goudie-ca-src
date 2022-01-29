@@ -20,7 +20,7 @@ class WordleGrid extends React.Component<WordleGridProps> {
 				return {
 					cells: [...Array(5)].map(() => {
 						return {
-							cellState: WordleCellState.Value.UNKNOWN,
+							cellState: WordleCellState.Value.DEAD,
 							value: ' '
 						};
 					})
@@ -36,7 +36,7 @@ class WordleGrid extends React.Component<WordleGridProps> {
 					key={i}
 					disabled={false}
 					values={[' ', ' ', ' ', ' ', ' ']}
-					cellStates={[WordleCellState.Value.UNKNOWN, WordleCellState.Value.UNKNOWN, WordleCellState.Value.UNKNOWN, WordleCellState.Value.UNKNOWN, WordleCellState.Value.UNKNOWN]}
+					cellStates={[WordleCellState.Value.DEAD, WordleCellState.Value.DEAD, WordleCellState.Value.DEAD, WordleCellState.Value.DEAD, WordleCellState.Value.DEAD]}
 					onValueUpdate={(value, cellIndex) => {
 						this.gridData.rows[i].cells[cellIndex].value = value;
 						this.onGridUpdate(this.gridData);

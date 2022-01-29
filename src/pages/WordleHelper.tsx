@@ -37,25 +37,22 @@ const WordleHelper: React.FC = () => {
 							gridData.rows.forEach((gridRow, rowIndex) => {
 								let isTargetRow = !foundTargetRow;
 								gridRow.cells.forEach((gridCell, columnIndex) => {
+									isTargetRow = isTargetRow && !!gridCell.value;
 									switch (gridCell.cellState) {
 									case WordleCellState.Value.DEAD:
-										isTargetRow = false;
 										deadLetters.push(gridCell.value);
 										break;
 									case WordleCellState.Value.KNOWN:
-										isTargetRow = false;
 										if (!deadPositions[gridCell.value]) {
 											deadPositions[gridCell.value] = [];
 										}
 										deadPositions[gridCell.value]?.push(columnIndex);
 										break;
-									case WordleCellState.Value.CONFIRMED:
-										isTargetRow = false;
 									}
 								});
 								if (isTargetRow) {
 									foundTargetRow = true;
-									targetRow = rowIndex - 1;
+									targetRow = rowIndex;
 								}
 							});
 							gridData.rows.forEach((gridRow, rowIndex) => {
@@ -73,6 +70,10 @@ const WordleHelper: React.FC = () => {
 									}
 								});
 							});
+
+							console.log(knownLetters);
+							console.log(deadLetters);
+							console.log(deadPositions);
 
 							setQuery(query.join(''));
 							setKnownLetters(knownLetters);
