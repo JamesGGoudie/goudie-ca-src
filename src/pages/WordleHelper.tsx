@@ -71,10 +71,6 @@ const WordleHelper: React.FC = () => {
 								});
 							});
 
-							console.log(knownLetters);
-							console.log(deadLetters);
-							console.log(deadPositions);
-
 							setQuery(query.join(''));
 							setKnownLetters(knownLetters);
 							setDeadLetters(deadLetters);
