@@ -177,7 +177,7 @@ export class WordleService {
 		} : undefined;
 
 		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), 0, usedLetters).sort((a, b) => {
-			return b.score - a.score;
+			return b.positionScore - a.positionScore;
 		});
 	}
 
@@ -186,7 +186,7 @@ export class WordleService {
 		if (!(nextLetters && Object.keys(nextLetters).length)) {
 			return [{
 				guess: '',
-				score: 0
+				positionScore: 0
 			}];
 		}
 
@@ -212,7 +212,7 @@ export class WordleService {
 
 			results.forEach((result) => {
 				output.push({
-					score: result.score + letterUsage[letter].uses[depth],
+					positionScore: result.positionScore + letterUsage[letter].uses[depth],
 					guess: letter + result.guess
 				});
 			});
