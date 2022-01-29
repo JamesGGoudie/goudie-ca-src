@@ -147,7 +147,7 @@ export class WordleService {
 	}
 
 	public static getBestGuess(index: WordleNode, avoidDups = false): WordleGuess[] {
-		const usedLetters: LetterUsed | undefined = avoidDups ? {
+		const usedLetters: LetterUsed = {
 			a: -1,
 			b: -1,
 			c: -1,
@@ -174,19 +174,20 @@ export class WordleService {
 			x: -1,
 			y: -1,
 			z: -1
-		} : undefined;
+		};
 
-		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), 0, usedLetters).sort((a, b) => {
-			return b.positionScore - a.positionScore;
+		return WordleService.getBestGuessHelper(index, WordleService.countLetterUse(index), 0, usedLetters, avoidDups).sort((a, b) => {
+			return (b.usageScore + b.positionScore) - (a.usageScore + a.positionScore);
 		});
 	}
 
-	private static getBestGuessHelper(index: WordleNode, letterUsage: LetterUsage, depth: number, usedLetters?: LetterUsed): WordleGuess[] {
+	private static getBestGuessHelper(index: WordleNode, letterUsage: LetterUsage, depth: number, usedLetters: LetterUsed, avoidDups: boolean): WordleGuess[] {
 		const nextLetters = index.nextLetters;
 		if (!(nextLetters && Object.keys(nextLetters).length)) {
 			return [{
 				guess: '',
-				positionScore: 0
+				positionScore: 0,
+				usageScore: 0
 			}];
 		}
 
@@ -198,22 +199,24 @@ export class WordleService {
 			if (!nextLetter) {
 				throw new Error();
 			}
-			if (usedLetters) {
-				if (usedLetters[letter] === -1) {
-					usedLetters[letter] = depth;
-				} else {
-					return;
-				}
+
+			if (usedLetters[letter] === -1) {
+				usedLetters[letter] = depth;
+			} else if (avoidDups) {
+				return;
 			}
-			const results = this.getBestGuessHelper(nextLetter, letterUsage, depth + 1, usedLetters);
-			if (usedLetters && usedLetters[letter] === depth) {
+
+			const results = this.getBestGuessHelper(nextLetter, letterUsage, depth + 1, usedLetters, avoidDups);
+
+			if (usedLetters[letter] === depth) {
 				usedLetters[letter] = -1;
 			}
 
 			results.forEach((result) => {
 				output.push({
 					positionScore: result.positionScore + letterUsage[letter].uses[depth],
-					guess: letter + result.guess
+					guess: letter + result.guess,
+					usageScore: result.usageScore + (usedLetters[letter] === -1 ? letterUsage[letter].uniqueWords : 0)
 				});
 			});
 		});

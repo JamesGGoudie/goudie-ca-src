@@ -104,7 +104,7 @@ const WordleHelper: React.FC = () => {
 						<IonTextarea
 							readonly={true}
 							rows={23}
-							value={guesses?.map(guess => `${guess.guess}: ${guess.positionScore}`).join('\n')}>
+							value={guesses?.map(guess => `${guess.guess}: ${guess.positionScore + guess.usageScore}`).join('\n')}>
 						</IonTextarea>
 					</div>
 				</div>
